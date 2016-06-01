@@ -2,27 +2,27 @@ var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-openidconnect').Strategy;
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-// Configure the Twitter strategy for use by Passport.
-//
-// OAuth 1.0-based strategies require a `verify` function which receives the
-// credentials (`token` and `tokenSecret`) for accessing the Twitter API on the
-// user's behalf, along with the user's profile.  The function must invoke `cb`
-// with a user object, which will be set at `req.user` in route handlers after
-// authentication.
+
 passport.use(new Strategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    authorizationURL: 'https://login0.myauth0.com/i/oauth2/authorize',
-    tokenURL: 'https://login0.myauth0.com/oauth/token',
-    callbackURL: 'http://localhost:3000/callback'
+    clientID: 'clientID',
+
+
+    clientSecret: 'Secret',
+
+    authorizationURL: 'http://your target name here:8080/openam/oauth2/testrealm/authorize',
+
+    tokenURL: 'http://your target name here:8080/openam/oauth2/testrealm/access_token',
+
+    userInfoURL: 'http://your target name here:8080/openam/oauth2/testrealm/userinfo',
+
+    callbackURL: 'http://localhost:3000/callback',
+    scope: 'mail profile',
+    scopeSeparator: ' '
   },
   function(token, tokenSecret, profile, cb) {
-    // In this example, the user's Twitter profile is supplied as the user
-    // record.  In a production-quality application, the Twitter profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
+
     return cb(null, profile);
   }));
 
@@ -88,6 +88,7 @@ app.get('/callback',
 app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
+    console.log('User authenticated');
     res.render('profile', { user: req.user });
   });
 
