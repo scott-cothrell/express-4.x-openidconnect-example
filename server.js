@@ -6,7 +6,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 
 passport.use(new Strategy({
-    clientID: 'ClientID',
+    clientID: 'clientID',
     clientSecret: 'Secret',
 
     authorizationURL: 'http://your target name here:8080/openam/oauth2/testrealm/authorize',
