@@ -1,8 +1,30 @@
-<p>
-ID: <%= user.id %><br/>
-Username: <%= user.username %><br/>
-Name: <%= user.displayName %><br/>
-<% if (user.emails) { %>
-Email: <%= user.emails[0].value %><br/>
-<% } %>
+
+<h1>User Successfully Logged In</h1>
+
+<h3>User Info</h3>
+
+<p style="font-family:Courier; color:Blue; font-size: 20px;">
+    UserID: <%= user.profile.id %><br/>
+    Display Name: <%= user.profile.displayName %><br/>
+    Given Name: <%= user.profile.name.givenName %><br/>
+    Family Name: <%= user.profile.name.familyName %><br/>
+</p>
+<hr>
+<h3>Token Info</h3>
+<p style="font-family:Courier; color:Blue; font-size: 20px;">
+    Access Token: <%= user.params.access_token %></br>
+    Token Type: <%= user.params.token_type %><br/>
+    Scopes: <%= user.params.scope %><br/>
+    <% if (user.params.refresh_token) { %>
+    Refresh Token: <%= user.params.refresh_token %><br/>
+    <% } else { %>
+    Refresh Token: Not Present<br/>
+    <% } %>
+    Expires in: <%= user.params.expires_in %><br/>
+    ID Token(JWT): <%= user.params.id_token %><br/>
+</p>
+<h3>JWT Claims</h3>
+<p style="font-family:Courier; color:Blue; font-size: 20px;">
+ <%- JSON.stringify(user.jwtClaims) %>
+
 </p>

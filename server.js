@@ -19,9 +19,10 @@ passport.use(new Strategy({
     scope: 'mail profile',
     scopeSeparator: ' '
   },
-  function(token, tokenSecret, profile, cb) {
+  function(token, tokenSecret, profile, jwtClaims, accessToken, refreshToken, params, cb) {
+      var loc = profile;
 
-    return cb(null, profile);
+    return cb(null, {profile, jwtClaims, accessToken, refreshToken, params} );
   }));
 
 
@@ -49,6 +50,7 @@ var app = express();
 // Configure view engine to render EJS templates.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.locals.pretty = true;
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -80,13 +82,20 @@ app.get('/login/idp',
 app.get('/callback', 
   passport.authenticate('openidconnect', { failureRedirect: '/login' }),
   function(req, res) {
+    if (req.user) {
+        console.log('Got a user');
+
+    }
     res.redirect('/');
   });
-
+var claims;
 app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
     console.log('User authenticated');
+      claims = req.user.jwtClaims;
+
+
     res.render('profile', { user: req.user });
   });
 
