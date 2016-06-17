@@ -15,8 +15,8 @@
     Access Token: <%= user.params.access_token %></br>
     Token Type: <%= user.params.token_type %><br/>
     Scopes: <%= user.params.scope %><br/>
-    <% if (user.params.refresh_token) { %>
-    Refresh Token: <%= user.params.refresh_token %><br/>
+    <% if (user.refreshToken) { %>
+    Refresh Token: <%= user.refreshToken %><br/>
     <% } else { %>
     Refresh Token: Not Present<br/>
     <% } %>
