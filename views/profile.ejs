@@ -5,9 +5,8 @@
 
 <p style="font-family:Courier; color:Blue; font-size: 20px;">
     UserID: <%= user.profile.id %><br/>
-    Display Name: <%= user.profile.displayName %><br/>
-    Given Name: <%= user.profile.name.givenName %><br/>
-    Family Name: <%= user.profile.name.familyName %><br/>
+    First Name: <%= user.profile._json.first %><br/>
+    Last Name: <%= user.profile._json.last %><br/>
 </p>
 <hr>
 <h3>Token Info</h3>
